@@ -1,0 +1,561 @@
+:root {
+    --w-expanded: 280px;
+    --w-collapsed: 72px;
+    --bg1: #000000;
+    --bg2: #1a1a1a;
+    --card: rgba(255, 255, 255, 0.05);
+    --accent: #ffffff;
+    --muted: #888888;
+    --text-primary: #ffffff;
+    --text-secondary: #cccccc;
+    --active-bg: #2a2a2a;
+    --search-bg: #1a1a1a;
+    --menu-bg: #000000;
+    --menu-item-active-bg: rgba(110, 231, 183, 0.1);
+    --search-border: rgba(255, 255, 255, 0.3);
+    --glass: rgba(255, 255, 255, 0.03);
+    --ease: cubic-bezier(.16, .84, .25, 1);
+    --dur: 360ms;
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+}
+
+/* Light theme overrides */
+html[data-theme="light"] {
+    --bg1: #ffffff;
+    --bg2: #f6f7fb;
+    --card: rgba(2, 6, 23, 0.04);
+    --accent: #0b5fff;
+    --muted: #6b7280;
+    --text-primary: #0b1220;
+    --text-secondary: #374151;
+    --active-bg: rgba(11, 90, 255, 0.06);
+    --search-bg: #f2f4f8;
+    --glass: rgba(2, 6, 23, 0.02);
+    --menu-bg: #ffffff;
+    --menu-item-active-bg: rgba(11, 90, 255, 0.08);
+    --search-border: rgba(16, 24, 40, 0.08);
+}
+
+* {
+    box-sizing: border-box
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    background: var(--bg2);
+    color: var(--text-primary)
+}
+
+.wrap {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.sidebar_wrap {
+    display: flex;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+/* SIDEBAR */
+.sidebar_menu {
+    height: 100dvh;
+    background: var(--menu-bg);
+    border-right: 1px solid var(--active-bg);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 16px;
+}
+
+.sidebar {
+    width: var(--w-expanded);
+    height: 100dvh;
+    background: var(--bg1);
+    padding: 20px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: width var(--dur) var(--ease), box-shadow 220ms;
+    position: relative;
+    overflow: hidden;
+}
+
+.sidebar.collapsed {
+    width: var(--w-collapsed)
+}
+
+/* header */
+.header {
+    display: flex;
+    align-items: center;
+    gap: 10px
+}
+
+.logo {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    background: linear-gradient(135deg, #1f4ea8, #1fb3ff);
+    box-shadow: 0 8px 20px rgba(22, 48, 90, 0.6)
+}
+
+.brand {
+    display: flex;
+    flex-direction: column;
+    line-height: 1
+}
+
+.brand .name {
+    font-size: 16px;
+    font-weight: 700
+}
+
+.brand .sub {
+    font-size: 12px;
+    color: var(--muted)
+}
+
+.sidebar.collapsed .brand {
+    opacity: 0;
+    transform: translateX(-6px)
+}
+
+.toggle {
+    margin-left: auto;
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: inline-grid;
+    place-items: center;
+    cursor: pointer;
+    transform-origin: center;
+    transition: transform 180ms
+}
+
+.toggle:hover {
+    background-color: var(--active-bg);
+}
+
+.toggle:active {
+    transform: scale(.98)
+}
+
+.toggle .chev {
+    transition: transform var(--dur) var(--ease)
+}
+
+
+/* menu */
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    height: 100%;
+}
+
+.group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px
+}
+
+.sidebar_menu .item {
+    gap: 12px;
+    padding: 12px;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+    cursor: pointer;
+    position: relative;
+    transition: background 180ms, var(--label-delay) 0ms;
+    -webkit-tap-highlight-color: transparent;
+    flex-wrap: wrap;
+}
+
+.sidebar_menu .item:hover {
+    background-color: var(--active-bg);
+}
+
+.menu_item_main_link {
+    width: 100%;
+    position: relative;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    padding: 12px;
+    border-radius: 4px;
+
+}
+
+.item.has-submenu.expanded .menu_item_main_link,
+.menu_item_main_link:hover {
+    background: var(--active-bg);
+}
+
+.icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 20px;
+    font-size: 16px;
+    color: var(--text-primary)
+}
+
+.label {
+    font-size: 14px;
+    color: var(--text-primary);
+    white-space: nowrap;
+    transition: opacity 240ms var(--ease), transform 240ms var(--ease);
+    font-weight: 500;
+}
+
+.sidebar.collapsed .label {
+    opacity: 0;
+    transform: translateX(-8px);
+    pointer-events: none
+}
+
+/* active item */
+.item.active {
+    background: var(--active-bg);
+}
+
+.item.active .icon {
+    color: var(--text-primary);
+}
+
+.item.active .label {
+    color: var(--text-primary);
+    font-weight: 600
+}
+
+/* tooltip shown only when collapsed */
+.tooltip {
+    position: absolute;
+    left: calc(100% + 12px);
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 8px 12px;
+    border-radius: 10px;
+    color: var(--muted);
+    font-size: 13px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 160ms ease
+}
+
+.sidebar.collapsed .item:hover .tooltip {
+    opacity: 1
+}
+
+/* stagger labels on expand using nth-child delays */
+.group .item:nth-child(1) .label {
+    transition-delay: 40ms
+}
+
+.group .item:nth-child(2) .label {
+    transition-delay: 80ms
+}
+
+.group .item:nth-child(3) .label {
+    transition-delay: 120ms
+}
+
+.group .item:nth-child(4) .label {
+    transition-delay: 160ms
+}
+
+.group .item:nth-child(5) .label {
+    transition-delay: 200ms
+}
+
+/* right column small cards */
+.right-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 10px
+}
+
+.card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.02)
+}
+
+.card .mini {
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700
+}
+
+.sidebar.collapsed .card .text {
+    opacity: 0;
+    transform: translateX(-6px)
+}
+
+
+
+/* responsive behaviour */
+@media (max-width:920px) {
+
+    .sidebar {
+        position: fixed;
+        left: -100%;
+        top: 0px;
+        z-index: 80
+    }
+
+}
+
+@media (max-width:520px) {
+
+    /* on very small screens overlay and hidden by default */
+    .sidebar {
+        transform: translateX(-6px);
+        transition: transform 260ms var(--ease), width var(--dur) var(--ease)
+    }
+
+    .sidebar.open {
+        transform: translateX(0)
+    }
+}
+
+/* scrollbar styling */
+.menu::-webkit-scrollbar {
+    width: 8px
+}
+
+.menu::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px
+}
+
+/* Submenu Styles */
+.item.has-submenu {
+    position: relative;
+}
+
+.submenu-arrow {
+
+    color: var(--text-secondary);
+    font-size: 12px;
+    transition: transform var(--dur) var(--ease), opacity 240ms var(--ease);
+    pointer-events: none;
+    margin-left: auto;
+}
+
+.sidebar.collapsed .submenu-arrow {
+    opacity: 0;
+    transform: translateX(-8px);
+}
+
+.item.has-submenu.expanded .submenu-arrow {
+    transform: rotate(180deg);
+}
+
+.submenu {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height var(--dur) var(--ease);
+    background: transparent;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.item.has-submenu.expanded .submenu {
+    max-height: 200px;
+}
+
+.submenu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px 12px 45px;
+    cursor: pointer;
+    transition: background 180ms, color 180ms;
+    border-radius: 0;
+    margin: 0;
+    background: transparent;
+}
+
+.submenu-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.submenu-icon {
+    display: none;
+}
+
+.submenu-label {
+    font-size: 14px;
+    color: var(--text-primary);
+    white-space: nowrap;
+    transition: opacity 240ms var(--ease), transform 240ms var(--ease);
+    font-weight: 400;
+}
+
+.sidebar.collapsed .submenu-label {
+    opacity: 0;
+    transform: translateX(-8px);
+    pointer-events: none;
+}
+
+.submenu-item.active {
+    background: transparent;
+}
+
+.submenu-item.active .submenu-label {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.submenu-item.active .submenu-icon {
+    color: var(--text-primary);
+}
+
+/* Hide submenu when sidebar is collapsed */
+.sidebar.collapsed .submenu {
+    max-height: 0 !important;
+}
+
+.sidebar.collapsed .item.has-submenu.expanded .submenu-arrow {
+    transform: translateY(-50%) translateX(-8px);
+}
+
+/* Search bar styling */
+.search-container {
+    margin-bottom: 20px;
+}
+
+.search-input {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--search-border);
+    border-radius: 8px;
+    padding: 2px 12px;
+}
+
+.search-input input {
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    flex: 1;
+    margin-left: 8px;
+    outline: none;
+    font-size: 14px;
+    height: 40px;
+}
+
+.search-input input::placeholder {
+    color: var(--muted);
+}
+
+.search-icon {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.sidebar.collapsed .search-container input::placeholder {
+    opacity: 0;
+}
+
+/* Section titles */
+.section-title {
+    color: var(--accent);
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin: 0;
+    padding: 0;
+}
+
+.sidebar.collapsed .section-title {
+    display: none;
+}
+
+/* Menu group transitions */
+.group[data-menu-group] {
+    transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+
+.group[data-menu-group]:not([style*="display: none"]) {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.group[data-menu-group][style*="display: none"] {
+    opacity: 0;
+    transform: translateY(10px);
+}
+
+.sidebar_menu .header {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    width: 40px;
+    justify-content: center;
+}
+
+/* Icon menu styles */
+#sidebar_menu .item {
+    transition: background 180ms, transform 180ms;
+}
+
+#sidebar_menu .item.active .icon {
+    color: var(--accent);
+    background: var(--menu-item-active-bg);
+}
+
+
+
+/* Theme toggle styles inside icon menu */
+.sidebar_menu .theme-toggle-item {
+    padding: 12px;
+}
+
+.theme-toggle {
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    display: inline-grid;
+    place-items: center;
+    cursor: pointer;
+    transition: background 180ms, color 180ms;
+}
+
+.theme-toggle:hover {
+    background: var(--active-bg);
+    color: var(--accent);
+}
+
+.theme-toggle i {
+    font-size: 14px;
+}

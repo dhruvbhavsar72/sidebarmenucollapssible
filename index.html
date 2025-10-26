@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Practical</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link href="styles.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="sidebar_wrap">
+            <aside class="sidebar_menu" id="sidebar_menu">
+                <div class="header">
+                    <div class="icon">
+                        <i class="fa-solid fa-table-columns"></i>
+                    </div>
+                </div>
+
+                <nav class="menu" aria-label="Icon menu">
+                    <div class="group">
+                        <div class="item active" data-group="1">
+                            <div class="icon"><i class="fa-solid fa-house"></i></div>
+                        </div>
+                        <div class="item" data-group="2">
+                            <div class="icon"><i class="fa-solid fa-clipboard-list"></i></div>
+                        </div>
+                    </div>
+
+                    <div class="group" style="margin-top:auto">
+                        <div class="item" data-group="3">
+                            <div class="icon"><i class="fa-solid fa-gear"></i></div>
+                        </div>
+                        <div class="item" data-group="4">
+                            <div class="icon"><i class="fa-solid fa-user"></i></div>
+                        </div>
+                        <!-- Theme toggle  -->
+                        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+                            <i class="fa-solid fa-moon"></i>
+                        </button>
+                    </div>
+                </nav>
+            </aside>
+            <aside class="sidebar" id="sidebar" aria-label="Main sidebar">
+                <div class="header">
+                    <h3 class="section-title">Main Navigation</h3>
+                    <button class="toggle" id="toggle" aria-label="Toggle sidebar"><i
+                            class="chev fa-solid fa-chevron-left"></i></button>
+                </div>
+
+                <div class="search-container">
+
+                    <div class="search-input">
+                        <i class="fa-solid fa-search search-icon"></i>
+                        <input type="text" placeholder="Search..." />
+                    </div>
+                </div>
+
+                <nav class="menu" aria-label="Main menu">
+                    <!-- Menu will be generated dynamically from JSON -->
+                </nav>
+            </aside>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
